@@ -1,0 +1,21 @@
+###
+# Add the following lines to your ~/.ssh/config to ease connecting to
+# the sandbox headnode and connecting to the compute node
+###
+
+Host sandbox
+    User root
+    Hostname sandbox
+    ServerAliveInterval 60
+    StrictHostKeyChecking no
+    UserKnownHostsFile=~/.ssh/demo-hosts
+    ForwardAgent yes
+
+# sandbox Network
+Host 192.168.220.*
+    ProxyCommand ssh -q sandbox nc %h %p
+    ForwardAgent yes
+    User root
+    ServerAliveInterval 60
+    StrictHostKeyChecking no
+    UserKnownHostsFile=~/.ssh/demo-hosts

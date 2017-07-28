@@ -1,0 +1,6 @@
+.DS_Store
+6gb
+*.log
+*.ova
+*.vmwarevm
+VMware-ovftool-*.bundle
