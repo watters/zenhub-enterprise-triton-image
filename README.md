@@ -24,7 +24,21 @@ You'll also want to make sure to add the appropriate keys to the remote host's
 authorized_keys files to enable password-less SSH between your local build and
 remote build hosts.
 
-1. Clone this repo and all submodules (e.g. `git clone --recursive …`)
+## Step-by-step for building an image
+
+1. Provision an Ubuntu instance, if you don't already have one: `$ triton inst create --name="image-conversion-demo" 80e13c87-76c8-4a25-bd1d-da3c846ccce8 k4-highcpu-kvm-1.75`
+1. Download and install OVF tool, e.g.
+ 1. [Download VMWare's OVF Tool locally](https://www.vmware.com/support/developer/ovf/)
+ 1. `$ cd ~/Downloads`
+ 1. `scp VMware-ovftool-4.2.0-5965791-lin.x86_64.bundle ubuntu@$(triton ip image-conversion-demo):~`
+1. `$ ssh ubuntu@$(triton ip image-conversion-demo)`
+1. (optional) Create an SSH key on the linux instance and add it to the sandbox's `authorized_keys`
+ 1. `ssh-keygen -b 256 -t ecdsa`
+ 1. use a different machine to shell into your sandbox and add the public key to the `authorized_keys`
+1. `$ chmod +x VMware-ovftool-4.2.0-5965791-lin.x86_64.bundle && ./VMware-ovftool-4.2.0-5965791-lin.x86_64.bundle`
+1. Clone this repo and all submodules `$ cd /mnt && sudo mkdir zenhub && sudo chown ubuntu zenhub && git clone --recursive https://github.com/watters/zenhub-enterprise-triton-image.git zenhub`
+1. `$ sudo echo '<your-sandbox-ip> sandbox' >> /etc/hosts`
+1. `$ cat tools/ssh-config >> ~/.ssh/config`
 1. Run `./build.sh`
 
 ## Step-by-step instructions for building and troubleshooting the image
